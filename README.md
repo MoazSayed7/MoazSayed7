@@ -17,7 +17,7 @@
 
 - 📫 How to reach me **moazsaid7586@gmail.com**
 
-- 📄 Know about my experiences [Resume.pdf](https://drive.google.com/file/d/1gFD1DJMUvoddExi-N2vZN_GA35_Ogtdf/view?usp=sharing)
+- 📄 Know about my experiences [Resume.pdf](https://drive.google.com/file/d/1XMya5SKe0XDRuBuODDDesRHrCrZVbXSB/view?usp=sharing)
 
 <h3 align="left">Connect with me:</h3>
 <p align="left">
