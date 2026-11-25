@@ -1,0 +1,93 @@
+name: Profile stats
+
+# Renders the stats cards and the 3D contribution graph (private repos
+# included) and commits the SVGs to this repository. The README shows
+# those files, so the token never leaves GitHub Actions.
+
+on:
+  schedule:
+    - cron: "17 3 * * *" # daily, off the hour to avoid queue spikes
+  workflow_dispatch:
+  # Preview only: renders on the review branch. Remove before merging.
+  push:
+    branches: [claude/serene-albattani-yedbw6]
+    paths: [.github/workflows/stats.yml]
+
+# Least privilege: the default GITHUB_TOKEN can only write repo contents.
+permissions:
+  contents: write
+
+concurrency:
+  group: profile-stats-${{ github.ref_name }}
+  cancel-in-progress: true
+
+env:
+  THEME: "theme=tokyonight&hide_border=true&border_radius=10"
+
+jobs:
+  stats:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Stats card
+        uses: stats-organization/github-readme-stats-action@v2.1.0
+        with:
+          card: stats
+          options: "username=${{ github.repository_owner }}&show_icons=true&count_private=true&include_all_commits=true&rank_icon=github&${{ env.THEME }}"
+          path: profile/stats.svg
+          token: ${{ secrets.METRICS_TOKEN }}
+
+      - name: Top languages card
+        uses: stats-organization/github-readme-stats-action@v2.1.0
+        with:
+          card: top-langs
+          # Generated Flutter platform code (desktop/iOS runners) skews the chart
+          options: "username=${{ github.repository_owner }}&layout=compact&langs_count=8&hide=c,c++,cmake,objective-c,swift,ruby&${{ env.THEME }}"
+          path: profile/top-langs.svg
+          token: ${{ secrets.METRICS_TOKEN }}
+
+      - name: Pinned repo cards
+        uses: stats-organization/github-readme-stats-action@v2.1.0
+        with:
+          card: pin
+          options: "username=${{ github.repository_owner }}&repo=Flutter-Chat-App-Firebase-Authentication-Messaging-WhatsApp-Like&description_lines_count=2&${{ env.THEME }}"
+          path: profile/pin-chat.svg
+          token: ${{ secrets.METRICS_TOKEN }}
+
+      - uses: stats-organization/github-readme-stats-action@v2.1.0
+        with:
+          card: pin
+          options: "username=${{ github.repository_owner }}&repo=Flutter-Bloc_Cubit-Animated-Auth-Screens-Firebase-Login-SignUp-Reset-SignWithGoogle&description_lines_count=2&${{ env.THEME }}"
+          path: profile/pin-auth.svg
+          token: ${{ secrets.METRICS_TOKEN }}
+
+      - uses: stats-organization/github-readme-stats-action@v2.1.0
+        with:
+          card: pin
+          options: "username=${{ github.repository_owner }}&repo=airtag-clone&description_lines_count=2&${{ env.THEME }}"
+          path: profile/pin-airtag.svg
+          token: ${{ secrets.METRICS_TOKEN }}
+
+      - uses: stats-organization/github-readme-stats-action@v2.1.0
+        with:
+          card: pin
+          options: "username=${{ github.repository_owner }}&repo=FlutterRickAndMortyCubitApp&description_lines_count=2&${{ env.THEME }}"
+          path: profile/pin-rickmorty.svg
+          token: ${{ secrets.METRICS_TOKEN }}
+
+      - name: 3D contribution graph
+        uses: yoshi389111/github-profile-3d-contrib@v0.9.3
+        env:
+          GITHUB_TOKEN: ${{ secrets.METRICS_TOKEN }}
+          USERNAME: ${{ github.repository_owner }}
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add profile profile-3d-contrib
+          git diff --cached --quiet && exit 0
+          git commit -m "chore(stats): update cards [skip ci]"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
