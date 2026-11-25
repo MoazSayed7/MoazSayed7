@@ -1,0 +1,9 @@
+# Keeps the pinned GitHub Actions versions up to date with security fixes.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: "chore(deps)"
