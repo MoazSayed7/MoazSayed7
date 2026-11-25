@@ -91,35 +91,40 @@ class MoazSayed {
 <summary><b>📅 Contribution history (2021 – 2025)</b></summary>
 <br />
 
-<b>2025</b><br />
+<h4 align="center">2025</h4>
+
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="profile-3d-contrib/history/2025-dark.svg" />
   <source media="(prefers-color-scheme: light)" srcset="profile-3d-contrib/history/2025-light.svg" />
   <img src="profile-3d-contrib/history/2025-light.svg" alt="2025 contributions in 3D" />
 </picture>
 
-<b>2024</b><br />
+<h4 align="center">2024</h4>
+
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="profile-3d-contrib/history/2024-dark.svg" />
   <source media="(prefers-color-scheme: light)" srcset="profile-3d-contrib/history/2024-light.svg" />
   <img src="profile-3d-contrib/history/2024-light.svg" alt="2024 contributions in 3D" />
 </picture>
 
-<b>2023</b><br />
+<h4 align="center">2023</h4>
+
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="profile-3d-contrib/history/2023-dark.svg" />
   <source media="(prefers-color-scheme: light)" srcset="profile-3d-contrib/history/2023-light.svg" />
   <img src="profile-3d-contrib/history/2023-light.svg" alt="2023 contributions in 3D" />
 </picture>
 
-<b>2022</b><br />
+<h4 align="center">2022</h4>
+
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="profile-3d-contrib/history/2022-dark.svg" />
   <source media="(prefers-color-scheme: light)" srcset="profile-3d-contrib/history/2022-light.svg" />
   <img src="profile-3d-contrib/history/2022-light.svg" alt="2022 contributions in 3D" />
 </picture>
 
-<b>2021</b><br />
+<h4 align="center">2021</h4>
+
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="profile-3d-contrib/history/2021-dark.svg" />
   <source media="(prefers-color-scheme: light)" srcset="profile-3d-contrib/history/2021-light.svg" />
