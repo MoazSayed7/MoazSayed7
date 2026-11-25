@@ -44,7 +44,7 @@ jobs:
         with:
           card: top-langs
           # Generated Flutter platform code (desktop/iOS runners) skews the chart
-          options: "username=${{ github.repository_owner }}&layout=compact&langs_count=8&hide=c,c++,cmake,objective-c,swift,ruby&${{ env.THEME }}"
+          options: "username=${{ github.repository_owner }}&layout=compact&langs_count=8&hide=c,c%2B%2B,cmake,objective-c,swift,ruby&${{ env.THEME }}"
           path: profile/top-langs.svg
           token: ${{ secrets.METRICS_TOKEN }}
 
