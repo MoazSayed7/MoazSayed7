@@ -89,7 +89,7 @@ class MoazSayed {
   <a href="https://github.com/MoazSayed7/Flutter-Chat-App-Firebase-Authentication-Messaging-WhatsApp-Like"><img src="profile/pin-chat.svg" alt="Flutter chat app" /></a>
   <a href="https://github.com/MoazSayed7/Flutter-Bloc_Cubit-Animated-Auth-Screens-Firebase-Login-SignUp-Reset-SignWithGoogle"><img src="profile/pin-auth.svg" alt="Animated auth screens" /></a>
   <a href="https://github.com/MoazSayed7/airtag-clone"><img src="profile/pin-airtag.svg" alt="AirTag clone GPS tracker" /></a>
-  <a href="https://github.com/MoazSayed7/FlutterRickAndMortyCubitApp"><img src="profile/pin-rickmorty.svg" alt="Rick and Morty Cubit app" /></a>
+  <a href="https://github.com/MoazSayed7/Financy-Fintech-App"><img src="profile/pin-financy.svg" alt="Financy fintech app" /></a>
 </p>
 
 ## 🐍 Contributions

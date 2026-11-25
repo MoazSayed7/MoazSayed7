@@ -35,7 +35,7 @@ jobs:
         uses: stats-organization/github-readme-stats-action@v2.1.0
         with:
           card: stats
-          options: "username=${{ github.repository_owner }}&show_icons=true&count_private=true&include_all_commits=true&rank_icon=github&${{ env.THEME }}"
+          options: "username=${{ github.repository_owner }}&show_icons=true&count_private=true&include_all_commits=true&${{ env.THEME }}"
           path: profile/stats.svg
           token: ${{ secrets.METRICS_TOKEN }}
 
@@ -73,8 +73,8 @@ jobs:
       - uses: stats-organization/github-readme-stats-action@v2.1.0
         with:
           card: pin
-          options: "username=${{ github.repository_owner }}&repo=FlutterRickAndMortyCubitApp&description_lines_count=2&${{ env.THEME }}"
-          path: profile/pin-rickmorty.svg
+          options: "username=${{ github.repository_owner }}&repo=Financy-Fintech-App&description_lines_count=2&${{ env.THEME }}"
+          path: profile/pin-financy.svg
           token: ${{ secrets.METRICS_TOKEN }}
 
       - name: 3D contribution graph
