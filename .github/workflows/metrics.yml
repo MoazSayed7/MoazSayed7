@@ -51,20 +51,19 @@ jobs:
           plugin_languages_sections: most-used
           plugin_languages_details: bytes-size, percentage
           plugin_languages_limit: 8
-          plugin_languages_threshold: 2%
+          plugin_languages_threshold: 0%
+          # Generated Flutter platform code (desktop/iOS runners) skews the chart
+          plugin_languages_ignored: c, c++, cmake, objective-c, swift, ruby
 
-      - name: Achievements
+      - name: Lines of code
         uses: lowlighter/metrics@v3.34
         with:
-          filename: metrics/achievements.svg
+          filename: metrics/lines.svg
           token: ${{ secrets.METRICS_TOKEN }}
           committer_token: ${{ secrets.GITHUB_TOKEN }}
-          committer_message: "chore(metrics): update achievements [skip ci]"
+          committer_message: "chore(metrics): update lines [skip ci]"
           user: ${{ github.repository_owner }}
           template: classic
           base: ""
           config_timezone: Africa/Cairo
-          plugin_achievements: yes
-          plugin_achievements_display: compact
-          plugin_achievements_threshold: B
-          plugin_achievements_limit: 8
+          plugin_lines: yes

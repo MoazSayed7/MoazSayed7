@@ -74,7 +74,7 @@ class MoazSayed {
 
 <p align="center">
   <img src="metrics/languages.svg" alt="Most used languages" />
-  <img src="metrics/achievements.svg" alt="Achievements" />
+  <img src="metrics/lines.svg" alt="Lines of code changed" />
 </p>
 
 <p align="center">
