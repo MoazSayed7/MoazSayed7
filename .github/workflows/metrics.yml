@@ -23,7 +23,7 @@ jobs:
     timeout-minutes: 20
     steps:
       - name: Overview
-        uses: lowlighter/metrics@v3.34
+        uses: lowlighter/metrics@v4
         with:
           filename: metrics/overview.svg
           token: ${{ secrets.METRICS_TOKEN }}
@@ -37,7 +37,7 @@ jobs:
           plugin_isocalendar_duration: full-year
 
       - name: Languages
-        uses: lowlighter/metrics@v3.34
+        uses: lowlighter/metrics@v4
         with:
           filename: metrics/languages.svg
           token: ${{ secrets.METRICS_TOKEN }}
@@ -56,7 +56,7 @@ jobs:
           plugin_languages_ignored: c, c++, cmake, objective-c, swift, ruby
 
       - name: Lines of code
-        uses: lowlighter/metrics@v3.34
+        uses: lowlighter/metrics@v4
         with:
           filename: metrics/lines.svg
           token: ${{ secrets.METRICS_TOKEN }}
