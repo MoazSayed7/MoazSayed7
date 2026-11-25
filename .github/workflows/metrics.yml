@@ -67,3 +67,7 @@ jobs:
           base: ""
           config_timezone: Africa/Cairo
           plugin_lines: yes
+          plugin_lines_sections: base, repositories
+          plugin_lines_repositories_limit: 4
+          # GitHub computes code-frequency stats lazily; wait, then query again
+          plugin_lines_delay: 30
