@@ -1,83 +1,127 @@
 name: Profile stats
 
-# Renders the stats cards and the 3D contribution graph (private repos
-# included) and commits the SVGs to this repository. The README shows
-# those files, so the token never leaves GitHub Actions.
+# Renders the stats cards (dark + light) and the 3D contribution graph
+# (last 12 months), private repos included, and commits the SVGs to this
+# repository. The token never leaves GitHub Actions.
 
 on:
   schedule:
     - cron: "17 3 * * *" # daily, off the hour to avoid queue spikes
   workflow_dispatch:
 
-# Least privilege: the default GITHUB_TOKEN can only write repo contents.
+# Least privilege: jobs only read by default; the commit job writes.
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: profile-stats-${{ github.ref_name }}
   cancel-in-progress: true
 
-env:
-  THEME: "theme=tokyonight&hide_border=true&border_radius=10"
-
 jobs:
-  stats:
+  cards:
+    name: Cards (${{ matrix.theme }})
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 10
+    strategy:
+      matrix:
+        include:
+          - theme: dark
+            style: "theme=tokyonight&hide_border=true&border_radius=10"
+          - theme: light
+            style: "theme=default&border_radius=10"
+    env:
+      OUT: out/profile/${{ matrix.theme }}
+      USER: username=${{ github.repository_owner }}
     steps:
-      - uses: actions/checkout@v7
-
-      - name: Stats card
+      - name: Stats
         uses: stats-organization/github-readme-stats-action@v2.1.0
         with:
           card: stats
-          options: "username=${{ github.repository_owner }}&show_icons=true&count_private=true&include_all_commits=true&${{ env.THEME }}"
-          path: profile/stats.svg
+          options: "${{ env.USER }}&show_icons=true&count_private=true&include_all_commits=true&${{ matrix.style }}"
+          path: ${{ env.OUT }}/stats.svg
           token: ${{ secrets.METRICS_TOKEN }}
 
-      - name: Top languages card
+      - name: Top languages
         uses: stats-organization/github-readme-stats-action@v2.1.0
         with:
           card: top-langs
           # Generated Flutter platform code (desktop/iOS runners) skews the chart
-          options: "username=${{ github.repository_owner }}&layout=compact&langs_count=8&hide=c,c%2B%2B,cmake,objective-c,swift,ruby&${{ env.THEME }}"
-          path: profile/top-langs.svg
+          options: "${{ env.USER }}&layout=compact&langs_count=8&hide=c,c%2B%2B,cmake,objective-c,swift,ruby&${{ matrix.style }}"
+          path: ${{ env.OUT }}/top-langs.svg
           token: ${{ secrets.METRICS_TOKEN }}
 
-      - name: Pinned repo cards
+      - name: Pin - chat app
         uses: stats-organization/github-readme-stats-action@v2.1.0
         with:
           card: pin
-          options: "username=${{ github.repository_owner }}&repo=Flutter-Chat-App-Firebase-Authentication-Messaging-WhatsApp-Like&description_lines_count=2&${{ env.THEME }}"
-          path: profile/pin-chat.svg
+          options: "${{ env.USER }}&repo=Flutter-Chat-App-Firebase-Authentication-Messaging-WhatsApp-Like&description_lines_count=2&${{ matrix.style }}"
+          path: ${{ env.OUT }}/pin-chat.svg
           token: ${{ secrets.METRICS_TOKEN }}
 
-      - uses: stats-organization/github-readme-stats-action@v2.1.0
+      - name: Pin - auth screens
+        uses: stats-organization/github-readme-stats-action@v2.1.0
         with:
           card: pin
-          options: "username=${{ github.repository_owner }}&repo=Flutter-Bloc_Cubit-Animated-Auth-Screens-Firebase-Login-SignUp-Reset-SignWithGoogle&description_lines_count=2&${{ env.THEME }}"
-          path: profile/pin-auth.svg
+          options: "${{ env.USER }}&repo=Flutter-Bloc_Cubit-Animated-Auth-Screens-Firebase-Login-SignUp-Reset-SignWithGoogle&description_lines_count=2&${{ matrix.style }}"
+          path: ${{ env.OUT }}/pin-auth.svg
           token: ${{ secrets.METRICS_TOKEN }}
 
-      - uses: stats-organization/github-readme-stats-action@v2.1.0
+      - name: Pin - airtag clone
+        uses: stats-organization/github-readme-stats-action@v2.1.0
         with:
           card: pin
-          options: "username=${{ github.repository_owner }}&repo=airtag-clone&description_lines_count=2&${{ env.THEME }}"
-          path: profile/pin-airtag.svg
+          options: "${{ env.USER }}&repo=airtag-clone&description_lines_count=2&${{ matrix.style }}"
+          path: ${{ env.OUT }}/pin-airtag.svg
           token: ${{ secrets.METRICS_TOKEN }}
 
-      - uses: stats-organization/github-readme-stats-action@v2.1.0
+      - name: Pin - Rick and Morty
+        uses: stats-organization/github-readme-stats-action@v2.1.0
         with:
           card: pin
-          options: "username=${{ github.repository_owner }}&repo=FlutterRickAndMortyCubitApp&description_lines_count=2&${{ env.THEME }}"
-          path: profile/pin-rickmorty.svg
+          options: "${{ env.USER }}&repo=FlutterRickAndMortyCubitApp&description_lines_count=2&${{ matrix.style }}"
+          path: ${{ env.OUT }}/pin-rickmorty.svg
           token: ${{ secrets.METRICS_TOKEN }}
 
-      - name: 3D contribution graph
+      - uses: actions/upload-artifact@v4
+        with:
+          name: render-cards-${{ matrix.theme }}
+          path: out/
+
+  contrib-3d:
+    name: 3D graph
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Render
         uses: yoshi389111/github-profile-3d-contrib@v0.9.3
         env:
           GITHUB_TOKEN: ${{ secrets.METRICS_TOKEN }}
           USERNAME: ${{ github.repository_owner }}
+
+      - name: Stage files
+        run: |
+          mkdir -p out/profile-3d-contrib
+          cp profile-3d-contrib/profile-*.svg out/profile-3d-contrib/
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: render-3d
+          path: out/
+
+  commit:
+    needs: [cards, contrib-3d]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: render-*
+          merge-multiple: true
+          path: .
 
       - name: Commit changes
         run: |

@@ -75,21 +75,25 @@ class MoazSayed {
 </picture>
 
 <p align="center">
-  <img src="profile/stats.svg" alt="GitHub stats" height="170" />
-  <img src="profile/top-langs.svg" alt="Top languages" height="170" />
+  <picture><source media="(prefers-color-scheme: dark)" srcset="profile/dark/stats.svg" /><source media="(prefers-color-scheme: light)" srcset="profile/light/stats.svg" /><img src="profile/light/stats.svg" alt="GitHub stats" height="170" /></picture>
+  <picture><source media="(prefers-color-scheme: dark)" srcset="profile/dark/top-langs.svg" /><source media="(prefers-color-scheme: light)" srcset="profile/light/top-langs.svg" /><img src="profile/light/top-langs.svg" alt="Top languages" height="170" /></picture>
 </p>
 
 <p align="center">
-  <img src="https://streak-stats.demolab.com?user=MoazSayed7&theme=tokyonight&hide_border=true&border_radius=10" alt="GitHub streak" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://streak-stats.demolab.com?user=MoazSayed7&border_radius=10&theme=tokyonight&hide_border=true" />
+    <source media="(prefers-color-scheme: light)" srcset="https://streak-stats.demolab.com?user=MoazSayed7&border_radius=10&theme=default" />
+    <img src="https://streak-stats.demolab.com?user=MoazSayed7&border_radius=10&theme=default" alt="GitHub streak" />
+  </picture>
 </p>
 
 ## 🚀 Featured projects
 
 <p align="center">
-  <a href="https://github.com/MoazSayed7/Flutter-Chat-App-Firebase-Authentication-Messaging-WhatsApp-Like"><img src="profile/pin-chat.svg" alt="Flutter chat app" /></a>
-  <a href="https://github.com/MoazSayed7/Flutter-Bloc_Cubit-Animated-Auth-Screens-Firebase-Login-SignUp-Reset-SignWithGoogle"><img src="profile/pin-auth.svg" alt="Animated auth screens" /></a>
-  <a href="https://github.com/MoazSayed7/airtag-clone"><img src="profile/pin-airtag.svg" alt="AirTag clone GPS tracker" /></a>
-  <a href="https://github.com/MoazSayed7/FlutterRickAndMortyCubitApp"><img src="profile/pin-rickmorty.svg" alt="Rick and Morty Cubit app" /></a>
+  <a href="https://github.com/MoazSayed7/Flutter-Chat-App-Firebase-Authentication-Messaging-WhatsApp-Like"><picture><source media="(prefers-color-scheme: dark)" srcset="profile/dark/pin-chat.svg" /><source media="(prefers-color-scheme: light)" srcset="profile/light/pin-chat.svg" /><img src="profile/light/pin-chat.svg" alt="Flutter chat app" /></picture></a>
+  <a href="https://github.com/MoazSayed7/Flutter-Bloc_Cubit-Animated-Auth-Screens-Firebase-Login-SignUp-Reset-SignWithGoogle"><picture><source media="(prefers-color-scheme: dark)" srcset="profile/dark/pin-auth.svg" /><source media="(prefers-color-scheme: light)" srcset="profile/light/pin-auth.svg" /><img src="profile/light/pin-auth.svg" alt="Animated auth screens" /></picture></a>
+  <a href="https://github.com/MoazSayed7/airtag-clone"><picture><source media="(prefers-color-scheme: dark)" srcset="profile/dark/pin-airtag.svg" /><source media="(prefers-color-scheme: light)" srcset="profile/light/pin-airtag.svg" /><img src="profile/light/pin-airtag.svg" alt="AirTag clone GPS tracker" /></picture></a>
+  <a href="https://github.com/MoazSayed7/FlutterRickAndMortyCubitApp"><picture><source media="(prefers-color-scheme: dark)" srcset="profile/dark/pin-rickmorty.svg" /><source media="(prefers-color-scheme: light)" srcset="profile/light/pin-rickmorty.svg" /><img src="profile/light/pin-rickmorty.svg" alt="Rick and Morty Cubit app" /></picture></a>
 </p>
 
 ## 🐍 Contributions
