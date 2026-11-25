@@ -1,17 +1,13 @@
 name: Profile stats
 
-# Renders the stats cards (dark + light) and the 3D contribution graphs
-# (last 12 months + one per past year), private repos included, and
-# commits the SVGs to this repository. The token never leaves Actions.
+# Renders the stats cards (dark + light) and the 3D contribution graph
+# (last 12 months), private repos included, and commits the SVGs to this
+# repository. The token never leaves GitHub Actions.
 
 on:
   schedule:
     - cron: "17 3 * * *" # daily, off the hour to avoid queue spikes
   workflow_dispatch:
-  # Preview only: renders on the review branch. Remove before merging.
-  push:
-    branches: [claude/serene-albattani-yedbw6]
-    paths: [.github/workflows/stats.yml]
 
 # Least privilege: jobs only read by default; the commit job writes.
 permissions:
@@ -92,48 +88,25 @@ jobs:
           path: out/
 
   contrib-3d:
-    name: 3D graph (${{ matrix.year || 'last 12 months' }})
+    name: 3D graph
     runs-on: ubuntu-latest
     timeout-minutes: 10
-    strategy:
-      matrix:
-        # "" = rolling last 12 months; past years render once, then stay.
-        year: ["", "2021", "2022", "2023", "2024", "2025"]
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Skip past years already rendered
-        id: check
-        run: |
-          if [ -n "${{ matrix.year }}" ] && [ -f "profile-3d-contrib/history/${{ matrix.year }}-dark.svg" ]; then
-            echo "skip=true" >> "$GITHUB_OUTPUT"
-          fi
-
       - name: Render
-        if: steps.check.outputs.skip != 'true'
         uses: yoshi389111/github-profile-3d-contrib@v0.9.3
         env:
           GITHUB_TOKEN: ${{ secrets.METRICS_TOKEN }}
           USERNAME: ${{ github.repository_owner }}
-          YEAR: ${{ matrix.year }}
 
       - name: Stage files
-        if: steps.check.outputs.skip != 'true'
         run: |
-          if [ -z "${{ matrix.year }}" ]; then
-            mkdir -p out/profile-3d-contrib
-            cp profile-3d-contrib/profile-*.svg out/profile-3d-contrib/
-          else
-            mkdir -p out/profile-3d-contrib/history
-            cp profile-3d-contrib/profile-night-rainbow.svg "out/profile-3d-contrib/history/${{ matrix.year }}-dark.svg"
-            cp profile-3d-contrib/profile-season.svg "out/profile-3d-contrib/history/${{ matrix.year }}-light.svg"
-          fi
+          mkdir -p out/profile-3d-contrib
+          cp profile-3d-contrib/profile-*.svg out/profile-3d-contrib/
 
       - uses: actions/upload-artifact@v4
         with:
-          name: render-3d-${{ matrix.year || 'current' }}
+          name: render-3d
           path: out/
-          if-no-files-found: ignore
 
   commit:
     needs: [cards, contrib-3d]
